@@ -13,42 +13,211 @@
         margin: 0;
       }
     </style>
+    <script>
+(async () => {
+    try {
+
+        const response = await fetch("./maintenance.json?t=" + Date.now());
+        const config = await response.json();
+
+        if (!config.maintenance) return;
+
+        document.body.innerHTML = `
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#0f172a;
+font-family:Inter,Arial,sans-serif;
+color:#fff;
+overflow:hidden;
+}
+
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#2563eb33,transparent 45%),
+radial-gradient(circle at bottom,#9333ea33,transparent 45%),
+#0f172a;
+}
+
+.card{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:min(92%,700px);
+padding:50px;
+border-radius:24px;
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.12);
+text-align:center;
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+.logo{
+font-size:65px;
+margin-bottom:15px;
+}
+
+h1{
+font-size:40px;
+margin-bottom:12px;
+}
+
+p{
+font-size:18px;
+color:#cbd5e1;
+line-height:1.7;
+}
+
+.timer{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin:40px 0;
+}
+
+.box{
+background:rgba(255,255,255,.08);
+padding:20px;
+border-radius:16px;
+}
+
+.value{
+font-size:34px;
+font-weight:bold;
+}
+
+.label{
+margin-top:6px;
+font-size:13px;
+color:#94a3b8;
+letter-spacing:1px;
+}
+
+button{
+margin-top:20px;
+padding:14px 34px;
+font-size:16px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#1d4ed8;
+transform:translateY(-2px);
+}
+
+.footer{
+margin-top:35px;
+font-size:14px;
+color:#94a3b8;
+}
+
+@media(max-width:650px){
+
+.timer{
+grid-template-columns:repeat(2,1fr);
+}
+
+h1{
+font-size:30px;
+}
+
+}
+
+</style>
+
+<div class="bg"></div>
+
+<div class="card">
+
+<div class="logo">🚧</div>
+
+<h1>${config.title}</h1>
+
+<p>${config.message}</p>
+
+<div class="timer">
+
+<div class="box">
+<div id="days" class="value">00</div>
+<div class="label">DAYS</div>
+</div>
+
+<div class="box">
+<div id="hours" class="value">00</div>
+<div class="label">HOURS</div>
+</div>
+
+<div class="box">
+<div id="minutes" class="value">00</div>
+<div class="label">MINUTES</div>
+</div>
+
+<div class="box">
+<div id="seconds" class="value">00</div>
+<div class="label">SECONDS</div>
+</div>
+
+</div>
+
+<button onclick="location.reload()">
+${config.buttonText}
+</button>
+
+<div class="footer">
+LFOODA • Thank you for your patience ❤️
+</div>
+
+</div>
+`;
+
+        function updateCountdown(){
+
+            const end=new Date(config.endTime).getTime();
+            const now=Date.now();
+            const diff=end-now;
+          if (diff <= 0) {
+
+    fetch("./maintenance.json?t=" + Date.now())
+      .then(r => r.json())
+      .then(data => {
+
+          if (data.maintenance) {
+              location.reload();
+          } else {
+              location.href = "/";
+          }
+
+      });
+
+    return;
+}
+
+        updateCountdown();
+
+        setInterval(updateCountdown,1000);
+
+    } catch(e){
+        console.error(e);
+    }
+})();
+</script>
   </head>
   <body>
-    <script>
-fetch('/maintenance.json')
-  .then(response => response.json())
-  .then(data => {
-    if (data.maintenance === true) {
-      document.body.innerHTML = `
-        <div style="
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          height:100vh;
-          margin:0;
-          background:#0f172a;
-          color:#ffffff;
-          font-family:Arial, sans-serif;
-          text-align:center;
-          padding:20px;
-        ">
-          <div>
-            <h1 style="font-size:42px;margin-bottom:15px;">🚧 Website Under Maintenance</h1>
-            <p style="font-size:20px;max-width:650px;line-height:1.6;">
-              We are currently working on improvements to provide you with a better experience.
-              Our website is temporarily unavailable while maintenance is in progress.
-            </p>
-            <p style="margin-top:20px;font-size:16px;color:#cbd5e1;">
-              Thank you for your patience. Please check back again soon.
-            </p>
-          </div>
-        </div>
-      `;
-    }
-  })
-  .catch(() => {});
-</script>
 
     <div id="gjs" style="height: 0px; overflow: hidden">
       <div class="panel">

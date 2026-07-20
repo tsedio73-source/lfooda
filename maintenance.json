@@ -1,3 +1,8 @@
 {
-  "maintenance": true
+  "maintenance": true,
+  "title": "LFOODA is Coming Soon",
+  "message": "We're working hard to deliver an amazing experience. The platform will officially launch on 22 July 2026 at 2:00 PM IST.",
+  "endTime": "2026-07-22T14:00:00+05:30",
+  "buttonText": "Check Again",
+  "buttonLink": "/"
 }

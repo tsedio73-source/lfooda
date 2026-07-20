@@ -14,6 +14,41 @@
       }
     </style>
   </head>
+  <script>
+fetch('/maintenance.json')
+  .then(response => response.json())
+  .then(data => {
+    if (data.maintenance === true) {
+      document.body.innerHTML = `
+        <div style="
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height:100vh;
+          margin:0;
+          background:#0f172a;
+          color:#ffffff;
+          font-family:Arial, sans-serif;
+          text-align:center;
+          padding:20px;
+        ">
+          <div>
+            <h1 style="font-size:42px;margin-bottom:15px;">🚧 Website Under Maintenance</h1>
+            <p style="font-size:20px;max-width:650px;line-height:1.6;">
+              We are currently working on improvements to provide you with a better experience.
+              Our website is temporarily unavailable while maintenance is in progress.
+            </p>
+            <p style="margin-top:20px;font-size:16px;color:#cbd5e1;">
+              Thank you for your patience. Please check back again soon.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+  })
+  .catch(() => {});
+</script>
+
 
   <body>
     <div id="gjs" style="height: 0px; overflow: hidden">
